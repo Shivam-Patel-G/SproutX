@@ -1,16 +1,16 @@
 {
-  "name": "sproutx",
+  "name": "sproutx-monorepo",
   "version": 2,
   "builds": [
     {
-      "src": "index.html",
+      "src": "simple-landing/**",
       "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/index.html"
+      "dest": "/simple-landing/$1"
     }
   ]
 }

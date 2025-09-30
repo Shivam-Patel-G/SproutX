@@ -4,7 +4,10 @@ This file provides guidance to WARP (warp.dev) when working with code in this re
 
 ## Project Overview
 
-SproutX is a simple, elegant frontend website serving as a landing page with navigation to prototype and video content. It's a static site built with vanilla HTML, CSS, and optimized for Vercel deployment.
+SproutX is organized as a monorepo containing multiple projects:
+
+- **simple-landing**: A simple, elegant frontend website serving as a landing page with navigation to prototype and video content. Built with vanilla HTML, CSS, and optimized for Vercel deployment.
+- **complex-app**: Reserved for future enhanced project development.
 
 **Tagline**: "Growing Ideas into Reality"
 
@@ -12,18 +15,27 @@ SproutX is a simple, elegant frontend website serving as a landing page with nav
 
 ### Local Development
 ```bash
-# No build step required - open directly in browser
+# For simple-landing (static site)
+cd simple-landing
 start index.html                    # Windows - opens in default browser
 # OR
 python -m http.server 8000          # Serve locally with Python
 # OR  
 npx serve .                         # Serve locally with Node.js (if available)
+
+# For complex-app (future)
+cd complex-app
+# Commands will depend on the framework chosen
 ```
 
 ### Deployment
 ```bash
-# Deploy to Vercel (if Vercel CLI is installed)
+# Deploy simple-landing (default - from repo root)
 vercel --prod
+
+# Deploy specific app from its folder
+cd simple-landing && vercel --prod
+cd complex-app && vercel --prod
 
 # Check deployment status
 vercel ls
@@ -42,11 +54,16 @@ git push origin main
 ### File Organization
 ```
 SproutX/
-├── index.html          # Single-page application entry point
-├── css/
-│   └── style.css      # All styles in one file using modern CSS
-├── vercel.json        # Vercel deployment configuration
-└── README.md         # Project documentation
+├── simple-landing/           # Static landing page
+│   ├── index.html           # Main entry point
+│   ├── css/
+│   │   └── style.css       # All styles for landing page
+│   └── vercel.json         # Vercel config for static deployment
+├── complex-app/             # Future enhanced project
+│   └── README.md           # Placeholder and structure guide
+├── vercel.json             # Root deployment config (routes to simple-landing)
+├── WARP.md                 # This file
+└── README.md              # Project documentation
 ```
 
 ### Design System
@@ -76,8 +93,14 @@ SproutX/
 - Animation and transition effects for enhanced UX
 
 ### Vercel Configuration
-- Static site deployment using `@vercel/static`
-- All routes redirect to `index.html` for SPA behavior
+**Root Configuration** (`/vercel.json`):
+- Routes all traffic to `simple-landing/` by default
+- Uses `@vercel/static` for simple-landing deployment
+- Monorepo setup allows independent app deployments
+
+**Simple Landing** (`/simple-landing/vercel.json`):
+- Minimal static site configuration
+- No catch-all routes (fixes CSS loading issues)
 - No build process required
 
 ### Content Structure
